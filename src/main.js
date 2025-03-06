@@ -17,7 +17,7 @@ let config = {
     width: 840,
     height: 640,
     pixelArt: true,
-    backgroundColor: '#87CEEB',
+    backgroundColor: '#67C3FC',
     physics: {
         default: "arcade",
         arcade: {

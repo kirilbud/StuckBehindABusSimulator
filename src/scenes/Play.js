@@ -13,7 +13,7 @@ class Play extends Phaser.Scene {
         //background
         
         //grass
-        this.add.rectangle(0,game.config.height/2, game.config.width, game.config.height/2, 0x3f9b0b).setOrigin(0,0)
+        this.add.rectangle(0,game.config.height/2 -50, game.config.width, game.config.height/2+50, 0x699034).setOrigin(0,0)
 
         
 
@@ -21,7 +21,7 @@ class Play extends Phaser.Scene {
 
 
         //player
-        this.player = new Player(this, game.config.width/2, game.config.height*5/6, 'player' , 0)
+        //this.player = new Player(this, game.config.width/2, game.config.height*5/6, 'player' , 0)
         
         //init road
         let roadCount = 500
@@ -30,18 +30,18 @@ class Play extends Phaser.Scene {
             let road
             //every other n switch from using the yellow road to the non yellow road
             if (Math.floor(i/25)%2 == 0) {
-                road = new RoadPart(this,game.config.width/2,game.config.height/2,'RoadYellow',0)
+                road = new ThirdDimObj(this,game.config.width/2,game.config.height/2,'RoadYellow',0)
             }else{
-                road = new RoadPart(this,game.config.width/2,game.config.height/2,'Road',0)
+                road = new ThirdDimObj(this,game.config.width/2,game.config.height/2,'Road',0)
             }
-            
-
+            road.xValu = 0
             road.zValu = i+1
 
             this.roads.push(road)
         }
         
         //init trees
+        /*
         let treeCount = 500
         this.trees = []
         for (let i = 0; i < treeCount; i++) {
@@ -57,18 +57,7 @@ class Play extends Phaser.Scene {
 
             this.trees.push(tree)
         }
-
-        //init trees
-        let obstacalCount = 25
-        this.obstacals = []
-        for (let i = 0; i < obstacalCount; i++) {
-            let obstacal
-            
-            obstacal = new ObstaclePart(this,game.config.width/2+5000 - Math.random()*10000,game.config.height/2,'paper',0)
-            obstacal.zValu = Math.random()*450+50
-
-            this.obstacals.push(obstacal)
-        }
+        */
 
         //inputs
         keySTOP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE)
@@ -94,20 +83,23 @@ class Play extends Phaser.Scene {
 
 
         this.gameSpeed = 20
-        this.gameAcceleration = .3
+        this.gameAcceleration = .0
 
         this.gameOver = false
         
 
         this.startTime = game.getTime()
         this.deltaTime = 0
+
+        this.globalXOffset = 0
         
+        /*
         this.music = this.sound.add('music', {volume: .4 })
         this.music.loop = true;
         if (!this.music.isPlaying) {
             this.music.play();
         }
-        
+        */
     }
 
     update(){
@@ -121,8 +113,17 @@ class Play extends Phaser.Scene {
 
         //console.log(this.deltaTime)
 
-        if (keyRESET.isDown) {
+        if (keyRESET.isDown) { // remember to remove this
             this.deltaTime = 0
+            //console.log(this.obstacals[0].zValu)
+        }
+
+        if (keyLEFT.isDown) {
+            this.globalXOffset += 5000*this.deltaTime
+            //console.log(this.obstacals[0].zValu)
+        }
+        if (keyRIGHT.isDown) {
+            this.globalXOffset -= 5000*this.deltaTime
             //console.log(this.obstacals[0].zValu)
         }
         
@@ -141,25 +142,20 @@ class Play extends Phaser.Scene {
             this.p1Score += this.gameSpeed * this.deltaTime
             this.middleScore.text = (String(Math.floor(this.p1Score/6))+ "m")
 
-            this.player.update()
+            //this.player.update()
             //while game is still running
             for (let i = 0; i < this.roads.length; i++) {
                 let road = this.roads[i]
                 road.update()
             }
 
+            /*
             for (let i = 0; i < this.trees.length; i++) {
                 let tree = this.trees[i]
                 tree.update()
             }
-
-            for (let i = 0; i < this.obstacals.length; i++) {
-                let obstacal = this.obstacals[i]
-                obstacal.update()
-                if (obstacal.zValu <=24 && obstacal.zValu >=20) {
-                    this.checkCollision(this.player, obstacal)
-                }
-            }
+            */
+            
             //console.log(this.obstacals[0])
 
             //console.log(this.trees[2].x)
@@ -168,6 +164,7 @@ class Play extends Phaser.Scene {
 
     }
 
+    /*
     checkCollision(player, object){
         //console.log(player.x-object.x)
         let dist = player.x-object.x
@@ -187,6 +184,6 @@ class Play extends Phaser.Scene {
         }
         
     }
-
+    */
 
 }

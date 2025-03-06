@@ -7,30 +7,19 @@ class Menu extends Phaser.Scene {
         //all the loading stuff goes here
         this.load.image('Road', './Assets/Road.png')
         this.load.image('RoadYellow', './Assets/RoadYellow.png')
-        this.load.image('tree', './Assets/Tree.png')
+        //this.load.image('tree', './Assets/Tree.png')
 
         //obsticals
-        this.load.image('waterCooler', './Assets/WaterCooler.png')
-        this.load.image('paper', './Assets/Paper.png')
-        this.load.image('trash', './Assets/Trash.png')
+
 
 
         //player
-        this.load.spritesheet('player', './Assets/FullSpritesheet.png',{
-            frameWidth: 126,
-            frameHeight: 100,
-        })
+        
 
         //audio
-        this.load.audio('idle', './Assets/idle.wav')
-        this.load.audio('push', './Assets/push.wav')
-        this.load.audio('stop', './Assets/stop_01.wav')
-        this.load.audio('select', './Assets/select.wav')
-        this.load.audio('hit', './Assets/hit.wav')
-
 
         //music
-        this.load.audio('music', './Assets/RollinDownhill.wav') //not my best work but i tried :(
+        //this.load.audio('music', './Assets/RollinDownhill.wav') 
 
     }
 
@@ -72,13 +61,13 @@ class Menu extends Phaser.Scene {
         if(Phaser.Input.Keyboard.JustDown(keySTOP)){
             //easy
 
-            this.sound.play('select')
+            //this.sound.play('select')
             this.scene.start('playScene')
         }
 
         if(Phaser.Input.Keyboard.JustDown(keyRIGHT)){
             this.scene.start('creditsScene')
-            this.sound.play('select')
+            //this.sound.play('select')
         }
     }
 }
