@@ -10,7 +10,7 @@ class ThirdDimObj extends Phaser.GameObjects.Sprite{
         
         this.zValu = 0
         this.xValu = x
-        this.newscale = 250
+        this.newscale = 300
         
         //this.globalXOffset = 0
 
