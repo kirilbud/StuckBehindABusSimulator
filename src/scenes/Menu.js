@@ -44,8 +44,8 @@ class Menu extends Phaser.Scene {
 
         //menu text
         menuConfig.color = '#000000'
-        this.add.text(game.config.width/2, game.config.height/3, 'Cubicle Collateral', menuConfig).setOrigin(0.5)
-        this.add.text(game.config.width/2, game.config.height/2 , 'Use ← → arrows to move & space to stop', menuConfig).setOrigin(0.5)
+        this.add.text(game.config.width/2, game.config.height/3, 'Virtual Stuck Behind A Bus', menuConfig).setOrigin(0.5)
+        this.add.text(game.config.width/2, game.config.height/2 , 'Use ← → arrows to move & space to accelerate', menuConfig).setOrigin(0.5)
         //menuConfig.backgroundColor = '#00ff00'
         menuConfig.color = '#000000'
         this.add.text(game.config.width/2, game.config.height/3*2, 'Press Space to play or → for credits', menuConfig).setOrigin(0.5)

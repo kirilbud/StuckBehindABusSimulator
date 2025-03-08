@@ -20,6 +20,9 @@ class Play extends Phaser.Scene {
         //game assets
         this.add.sprite(0, 0, 'car').setDepth(501).setOrigin(0)
 
+        this.bus = new Bus(this,game.config.width/2,game.config.height/2,'bus',0)
+        this.bus.zValu = 100
+
         //player
         //this.player = new Player(this, game.config.width/2, game.config.height*5/6, 'player' , 0)
         
@@ -82,7 +85,7 @@ class Play extends Phaser.Scene {
         this.middleScore = this.add.text(game.config.width/2, 20, this.p1Score, this.scoreConfig).setOrigin(.5,.5)
 
 
-        this.gameSpeed = 20
+        this.gameSpeed = 50
         this.gameAcceleration = .0
 
         this.gameOver = false
@@ -92,6 +95,8 @@ class Play extends Phaser.Scene {
         this.deltaTime = 0
 
         this.globalXOffset = 0
+
+        this.turnSpeed = 8000
         
         /*
         this.music = this.sound.add('music', {volume: .4 })
@@ -113,17 +118,17 @@ class Play extends Phaser.Scene {
 
         //console.log(this.deltaTime)
 
-        if (keyRESET.isDown) { // remember to remove this
+        if (!document.hasFocus()) { // remember to remove this
             this.deltaTime = 0
             //console.log(this.obstacals[0].zValu)
         }
 
         if (keyLEFT.isDown) {
-            this.globalXOffset += 5000*this.deltaTime
+            this.globalXOffset += this.turnSpeed*this.deltaTime
             //console.log(this.obstacals[0].zValu)
         }
         if (keyRIGHT.isDown) {
-            this.globalXOffset -= 5000*this.deltaTime
+            this.globalXOffset -= this.turnSpeed*this.deltaTime
             //console.log(this.obstacals[0].zValu)
         }
 
@@ -135,9 +140,13 @@ class Play extends Phaser.Scene {
                 this.gameSpeed = 10
                 this.gameAcceleration = 0
             }else{
-                this.gameAcceleration = -3
+                this.gameAcceleration = -5
             }
             
+        }
+
+        if (keyRESET.isDown) {
+            this.gameAcceleration = -20
         }
         
 
@@ -168,7 +177,7 @@ class Play extends Phaser.Scene {
                 tree.update()
             }
             
-            
+            this.bus.update()   
             //console.log(this.obstacals[0])
 
             //console.log(this.trees[2].x)
