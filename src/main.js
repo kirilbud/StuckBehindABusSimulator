@@ -24,7 +24,7 @@ let config = {
             debug: false
         }
     },
-    scene: [Menu, Play, Credits]
+    scene: [Menu, Play, Credits, HowTo]
 }
 
 

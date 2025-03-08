@@ -82,7 +82,7 @@ class Play extends Phaser.Scene {
             },
             // fixedWidth:100
         }
-        this.middleScore = this.add.text(game.config.width/2, 20, this.p1Score, this.scoreConfig).setOrigin(.5,.5)
+        //this.middleScore = this.add.text(game.config.width/2, 20, this.p1Score, this.scoreConfig).setOrigin(.5,.5)
 
 
         this.gameSpeed = 50
@@ -105,6 +105,18 @@ class Play extends Phaser.Scene {
             this.music.play();
         }
         */
+
+        this.driving = this.sound.add('driving', {volume: .7 })
+        this.driving.loop = true;
+        if (!this.driving.isPlaying) {
+            this.driving.play();
+        }
+
+        this.busSound = this.sound.add('bus')
+        this.busSound.loop = true;
+        if (!this.busSound.isPlaying) {
+            this.busSound.play();
+        }
     }
 
     update(){
@@ -162,7 +174,7 @@ class Play extends Phaser.Scene {
 
         if (!this.gameOver) {
             this.p1Score += this.gameSpeed * this.deltaTime
-            this.middleScore.text = (String(Math.floor(this.p1Score/6))+ "m")
+
 
             //this.player.update()
             //while game is still running
@@ -179,13 +191,45 @@ class Play extends Phaser.Scene {
             
             this.bus.update()   
             //console.log(this.obstacals[0])
+            this.driving.rate = this.gameSpeed/50
+            if (400/(this.bus.zValu* this.bus.zValu) > 1.5) {
+                this.busSound.volume = 1.5
+            }else{
+                this.busSound.volume = 400/(this.bus.zValu * this.bus.zValu)
+            }
+            
+
 
             //console.log(this.trees[2].x)
         }
         //console.log(game.loop.actualFps)
+        console.log(this.globalXOffset)
+        if (this.bus.zValu < 13 || this.bus.zValu > 200) {
+            //this.sound.play('hit')
+            this.endGame()
+        }
 
+        if (this.globalXOffset < -13000) {
+            this.endGame()
+        }
+        if (this.globalXOffset > 15000) {
+            this.endGame()
+        }
     }
 
+    endGame(){
+        console.log('crash')
+        this.busSound.stop()
+        this.driving.stop()
+
+
+        this.gameOver = true
+
+
+        this.add.text(game.config.width/2, game.config.height/4, 'oh no!', this.scoreConfig).setOrigin(0.5).setDepth(1000)
+        this.add.text(game.config.width/2, game.config.height/4*2, 'Well at least you made it ' + (String(Math.floor(this.p1Score/6))+ "m"), this.scoreConfig).setOrigin(0.5).setDepth(1000)
+        this.add.text(game.config.width/2, game.config.height/4*3, 'R to Restart or ← for menu', this.scoreConfig).setOrigin(0.5).setDepth(1000)
+    }
     /*
     checkCollision(player, object){
         //console.log(player.x-object.x)

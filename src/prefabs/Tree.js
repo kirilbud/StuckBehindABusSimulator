@@ -16,7 +16,7 @@ class Tree extends ThirdDimObj{
     }
 
     reset(){
-        console.log("this be printing")
+        //console.log("this be printing")
         this.zValu = 500 + this.zValu
         this.alpha = 0
         this.clock = this.scene.time.delayedCall(900*Math.random(), () => {
