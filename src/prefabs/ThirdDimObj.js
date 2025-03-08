@@ -10,7 +10,7 @@ class ThirdDimObj extends Phaser.GameObjects.Sprite{
         
         this.zValu = 0
         this.xValu = x
-        this.newscale = 300
+        this.newscale = 400
         
         //this.globalXOffset = 0
 
@@ -20,7 +20,7 @@ class ThirdDimObj extends Phaser.GameObjects.Sprite{
     update(){
         this.setDepth(500 - this.zValu)
         this.scale = 1/this.zValu*this.newscale 
-        this.y = (1/this.zValu)*5000 + (game.config.height/2) -8.5 - 50
+        this.y = (1/this.zValu)*5000 + (game.config.height/2) -8 - 50
         this.x = (this.xValu + this.scene.globalXOffset)*(1/this.zValu)*1 + game.config.width/2 
         //console.log(this.zValu)
 

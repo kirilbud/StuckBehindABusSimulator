@@ -10,11 +10,12 @@ class Menu extends Phaser.Scene {
         //this.load.image('tree', './Assets/Tree.png')
 
         //obsticals
-
+        this.load.image('tree', './Assets/trees.png')
+        this.load.image('bus', './Assets/bus.png')
 
 
         //player
-        
+        this.load.image('car', './Assets/car.png')
 
         //audio
 

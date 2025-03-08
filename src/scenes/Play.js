@@ -18,7 +18,7 @@ class Play extends Phaser.Scene {
         
 
         //game assets
-
+        this.add.sprite(0, 0, 'car').setDepth(501).setOrigin(0)
 
         //player
         //this.player = new Player(this, game.config.width/2, game.config.height*5/6, 'player' , 0)
@@ -41,15 +41,15 @@ class Play extends Phaser.Scene {
         }
         
         //init trees
-        /*
+        
         let treeCount = 500
         this.trees = []
         for (let i = 0; i < treeCount; i++) {
             let tree
             if (Math.random()>.5) {
-                tree = new TreePart(this,game.config.width/2+10000 + Math.random()*50000,game.config.height/2,'tree',0)
+                tree = new Tree(this,game.config.width/2+18000 + Math.random()*50000,game.config.height/2,'tree',0)
             }else{
-                tree = new TreePart(this,game.config.width/2-10000 - Math.random()*50000,game.config.height/2,'tree',0)
+                tree = new Tree(this,game.config.width/2-18000 - Math.random()*50000,game.config.height/2,'tree',0)
             }
             
 
@@ -57,7 +57,7 @@ class Play extends Phaser.Scene {
 
             this.trees.push(tree)
         }
-        */
+        
 
         //inputs
         keySTOP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE)
@@ -126,6 +126,19 @@ class Play extends Phaser.Scene {
             this.globalXOffset -= 5000*this.deltaTime
             //console.log(this.obstacals[0].zValu)
         }
+
+        if (keySTOP.isDown) {
+            this.gameAcceleration = 10
+            //console.log(this.obstacals[0].zValu)
+        }else{
+            if (this.gameSpeed < 10) {
+                this.gameSpeed = 10
+                this.gameAcceleration = 0
+            }else{
+                this.gameAcceleration = -3
+            }
+            
+        }
         
 
         if (this.gameOver && Phaser.Input.Keyboard.JustDown(keyRESET)) {
@@ -149,12 +162,12 @@ class Play extends Phaser.Scene {
                 road.update()
             }
 
-            /*
+            
             for (let i = 0; i < this.trees.length; i++) {
                 let tree = this.trees[i]
                 tree.update()
             }
-            */
+            
             
             //console.log(this.obstacals[0])
 
