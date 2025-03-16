@@ -27,8 +27,24 @@ class Menu extends Phaser.Scene {
         this.load.audio('driving', './Assets/sounds/driving.wav') 
         this.load.audio('bus', './Assets/sounds/bus.wav')
 
+        //dialoge audio
+        this.load.audio('PeterLaph1', './Assets/sounds/PeterLaph1.wav') 
+        this.load.audio('PeterLaph2', './Assets/sounds/PeterLaph2.wav') 
+        this.load.audio('PeterLaph3', './Assets/sounds/PeterLaph3.wav') 
+
+
+        this.load.audio('HummerTalk1', './Assets/sounds/HummerTalk1.wav') 
+        this.load.audio('HummerTalk2', './Assets/sounds/HummerTalk2.wav') 
+        this.load.audio('HummerTalk3', './Assets/sounds/HummerTalk3.wav')
+
         //music
         //this.load.audio('music', './Assets/RollinDownhill.wav') 
+
+        //dialog
+        this.load.json('intro1', 'json/intro1.json')
+
+        //font
+        this.load.bitmapFont('dis_font', './Assets/font/OpenDyslexic.png', './Assets/font/OpenDyslexic.xml')
 
     }
 

@@ -8,8 +8,6 @@ class Play extends Phaser.Scene {
         let bounds_offset = 150
         this.physics.world.setBounds( bounds_offset , 0, game.config.width - bounds_offset*2, game.config.height)
 
-        //this.add.text(20, 20, "Rocket Patrol Menu")
-
         //background
         
         //grass
@@ -117,6 +115,8 @@ class Play extends Phaser.Scene {
         if (!this.busSound.isPlaying) {
             this.busSound.play();
         }
+
+        this.peterDiolog = new DialogObj(this, 20, 20 , "sans", ["PeterLaph1","PeterLaph2","PeterLaph3"], "peter")
     }
 
     update(){
@@ -200,15 +200,19 @@ class Play extends Phaser.Scene {
             
 
 
-            //console.log(this.trees[2].x)
         }
-        //console.log(game.loop.actualFps)
-        console.log(this.globalXOffset)
-        if (this.bus.zValu < 13 || this.bus.zValu > 200) {
+
+
+        if (this.bus.zValu < 13 ) { // hit the bus
             //this.sound.play('hit')
             this.endGame()
         }
 
+        if (this.bus.zValu > 350) { // hit by hummer guy
+            this.endGame()
+        }
+
+        //whent off the side of the road
         if (this.globalXOffset < -13000) {
             this.endGame()
         }
@@ -230,26 +234,6 @@ class Play extends Phaser.Scene {
         this.add.text(game.config.width/2, game.config.height/4*2, 'Well at least you made it ' + (String(Math.floor(this.p1Score/6))+ "m"), this.scoreConfig).setOrigin(0.5).setDepth(1000)
         this.add.text(game.config.width/2, game.config.height/4*3, 'R to Restart or ← for menu', this.scoreConfig).setOrigin(0.5).setDepth(1000)
     }
-    /*
-    checkCollision(player, object){
-        //console.log(player.x-object.x)
-        let dist = player.x-object.x
-        dist = Math.abs(dist)
-        if (dist < object.width) {
-            this.sound.play('hit')
-            //console.log('crash')
-            this.music.stop()
-            this.gameOver = true
-            this.player.anims.stop()
-            this.player.rolling.stop()
 
-
-            this.add.text(game.config.width/2, game.config.height/4, 'oh no!', this.scoreConfig).setOrigin(0.5).setDepth(1000)
-            this.add.text(game.config.width/2, game.config.height/4*2, 'Well at least you made it ' + (String(Math.floor(this.p1Score/6))+ "m"), this.scoreConfig).setOrigin(0.5).setDepth(1000)
-            this.add.text(game.config.width/2, game.config.height/4*3, 'R to Restart or ← for menu', this.scoreConfig).setOrigin(0.5).setDepth(1000)
-        }
-        
-    }
-    */
 
 }
