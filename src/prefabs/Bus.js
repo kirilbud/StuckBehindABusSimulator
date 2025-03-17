@@ -15,8 +15,8 @@ class Bus extends ThirdDimObj{
         this.setOrigin(.5,1.05)
 
         this.speed = 45
-        this.turnspeed = 200
-        this.turnAccel = 2000
+        this.turnspeed = 1000
+        this.turnAccel = 13000
 
         this.followDist = 450
     }

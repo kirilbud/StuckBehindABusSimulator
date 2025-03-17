@@ -1,7 +1,7 @@
 /*
 Name: Kiril Saltz
 Project title: Stuck Behind a Bus
-Hours: 10
+Hours: 30
 Sources:
 Music: 
 sfx: 

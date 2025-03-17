@@ -45,9 +45,15 @@ class Menu extends Phaser.Scene {
 
         //dialog
         this.load.json('intro1', './Assets/dialoge/intro1.json')
+        this.load.json('intro2', './Assets/dialoge/intro2.json')
+        this.load.json('intro3', './Assets/dialoge/intro3.json')
+        this.load.json('how', './Assets/dialoge/howtoo.json')
+
 
         //diologe sprites 
         this.load.image('peter', './Assets/peterBox1.png')
+        this.load.image('hummer', './Assets/Hummer1.png')
+
         
 
         //font
@@ -58,19 +64,21 @@ class Menu extends Phaser.Scene {
     create(){
         this.add.rectangle(0,0,game.config.width, game.config.height, 0xDC5300).setOrigin(0)
 
-        this.how = this.add.sprite(80, 80, 'how').setOrigin(0).setScale(1.2).setInteractive({
+        this.logo = this.add.sprite(400, 60, 'logo').setOrigin(0).setScale(.70)
+
+        this.how = this.add.sprite(40, 40, 'how').setOrigin(0).setScale(1.2).setInteractive({
             useHandCursor: true,
         })
 
         this.how.on('pointerdown', () =>{this.scene.start('HowToScene')})
 
-        this.play = this.add.sprite(500, 80, 'play').setOrigin(0).setScale(.9).setInteractive({
+        this.play = this.add.sprite(650, 275+50, 'play').setOrigin(0).setScale(.6).setInteractive({
             useHandCursor: true,
         })
 
         this.play.on('pointerdown', () =>{this.scene.start('playScene')})
 
-        this.credits = this.add.sprite(500, 275+50, 'credits').setOrigin(0).setScale(.85).setInteractive({
+        this.credits = this.add.sprite(450, 275+50, 'credits').setOrigin(0).setScale(.65).setInteractive({
             useHandCursor: true,
         })
 
@@ -92,7 +100,7 @@ class Menu extends Phaser.Scene {
 
         //menu text
         menuConfig.color = '#000000'
-        this.add.text(game.config.width/2, 40, 'Virtual Stuck Behind A Bus', menuConfig).setOrigin(0.5)
+        //this.add.text(game.config.width/2, 40, 'Virtual Stuck Behind A Bus', menuConfig).setOrigin(0.5)
 
         //keys
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT)

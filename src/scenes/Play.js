@@ -122,8 +122,9 @@ class Play extends Phaser.Scene {
         }
         */
 
-        this.driving = this.sound.add('driving', {volume: 1 })
+        this.driving = this.sound.add('driving', {volume: 3 })
         this.driving.loop = true;
+        
         if (!this.driving.isPlaying) {
             this.driving.play();
         }
@@ -134,10 +135,33 @@ class Play extends Phaser.Scene {
             this.busSound.play();
         }
 
+        this.introSequence = 0
         this.peterDiolog = new DialogObj(this, 20, 20 , "sans", ["PeterLaph1","PeterLaph2","PeterLaph3"], "peter", "intro1")
+        
+
+        this.drift = -1000 + Math.random()*2000
+        this.drifttimer = this.time.addEvent({
+            delay:  400*Math.random(),
+            callback: ()=> {
+                this.drifttimer.delay =  40000*Math.random()
+                this.drift = -1000 + Math.random()*2000
+                console.log("yeah")
+            },
+            //args: [],
+            callbackScope: this,
+            loop: true
+        });
     }
 
     update(){
+        //intro sequence
+        if(!this.peterDiolog.exists && this.introSequence == 0){
+            this.peterDiolog = new DialogObj(this, 20, 20 , "sans", ["HummerTalk1","HummerTalk2","HummerTalk3"], "hummer", "intro2")
+            this.introSequence++
+        }else if (!this.peterDiolog.exists && this.introSequence == 1) {
+            this.peterDiolog = new DialogObj(this, 20, 20 , "sans", ["PeterLaph1","PeterLaph2","PeterLaph3"], "peter", "intro3")
+            this.introSequence++
+        }
 
         if (this.clickingOnWheel) {
             let v1_x = this.wheel.x - this.initX
@@ -155,9 +179,13 @@ class Play extends Phaser.Scene {
             //console.log(this.wheel.y - this.game.input.mousePointer.y)
 
             let dot = v2.dot(v1)
-            this.wheel.rotation = Math.atan2(v2.y , v2.x ) - Math.atan2(v1.y , v1.x )
+            let rot = Math.atan2(v2.y , v2.x ) - Math.atan2(v1.y , v1.x )
+            //console.log(rot)
+            
+            this.wheel.rotation = rot
+            
             let angle = v1
-            console.log(Math.atan2(v2.y , v2.x ) - Math.atan2(v1.y , v1.x ))
+            //console.log(Math.atan2(v2.y , v2.x ) - Math.atan2(v1.y , v1.x ))
         }
         
 
@@ -186,7 +214,7 @@ class Play extends Phaser.Scene {
         }
         */
 
-        this.globalXOffset = this.globalXOffset - this.wheel.rotation*this.deltaTime *4000
+        this.globalXOffset = this.globalXOffset - this.wheel.rotation*this.deltaTime *6000 - this.drift *this.deltaTime
 
         if (keySTOP.isDown) {
             this.gameAcceleration = 10
@@ -236,10 +264,10 @@ class Play extends Phaser.Scene {
             this.bus.update()   
             //console.log(this.obstacals[0])
             this.driving.rate = this.gameSpeed/50
-            if (500/(this.bus.zValu* this.bus.zValu) > 2) {
-                this.busSound.volume = 2
+            if (700/(this.bus.zValu* this.bus.zValu) > 4) {
+                this.busSound.volume = 4
             }else{
-                this.busSound.volume = 500/(this.bus.zValu * this.bus.zValu)
+                this.busSound.volume = 700/(this.bus.zValu * this.bus.zValu)
             }
             
 

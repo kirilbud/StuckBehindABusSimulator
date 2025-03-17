@@ -4,8 +4,8 @@ class DialogObj extends Phaser.GameObjects.Sprite{
     constructor(scene, x, y, texture, sfx, character, dialog){
         super(scene, x, y, texture, 0)
         scene.add.existing(this)
-
-        this.isTalking = true
+        this.alpha = 0
+        this.isTalking = false
         this.finished = false
 
         this.sfx = sfx
@@ -13,7 +13,7 @@ class DialogObj extends Phaser.GameObjects.Sprite{
 
         
         this.NEXT_TEXT = '[SPACE]'
-        this.LETTER_TIMER = 10
+        this.LETTER_TIMER = 60
         
         let box_width = game.config.width  -x*2
         let box_height = game.config.height/5
@@ -25,16 +25,19 @@ class DialogObj extends Phaser.GameObjects.Sprite{
         this.TEXT_X = x + 120
         this.TEXT_Y = y + 10
 
+        this.NEXT_X = x + box_width
+        this.NEXT_Y = y + box_height
+
         this.DBOX_FONT = 'dis_font'
 
         this.TEXT_SIZE = 22
 
         this.dialogText = scene.add.bitmapText(this.TEXT_X, this.TEXT_Y, this.DBOX_FONT, '', this.TEXT_SIZE).setDepth(602).setOrigin(0)
-        this.dialogText.setMaxWidth(box_width - 100)
-        this.nextText = scene.add.bitmapText(this.NEXT_X, this.NEXT_Y, this.DBOX_FONT, '', this.TEXT_SIZE).setDepth(603)
+        this.dialogText.setMaxWidth(box_width - 140)
+        this.nextText = scene.add.bitmapText(this.NEXT_X, this.NEXT_Y, this.DBOX_FONT, '[Click to continue]', this.TEXT_SIZE).setDepth(603).setOrigin(1,2)
 
         this.box.on('pointerdown', () =>{
-            if (this.isTalking) {
+            if (!this.isTalking) {
                 this.nextPart()
             }
         })
@@ -43,29 +46,89 @@ class DialogObj extends Phaser.GameObjects.Sprite{
 
         this.line = 0
         console.log(this.dialog)
+
+
+
+        console.log(sfx[0])
+        this.Sound1 = scene.sound.add(sfx[0])
+        this.Sound2 = scene.sound.add(sfx[1])
+        this.Sound3 = scene.sound.add(sfx[2])
+        this.nextPart()
+
+        this.exists = true
+
     }
 
     nextPart(){
         console.log(this.dialog.length)
         if (this.line < this.dialog.length) {
             console.log(this.dialog[this.line]['dialog'])
-            this.dialogText.text = this.dialog[this.line]['dialog']
+            //this.dialogText.text = this.dialog[this.line]['dialog']
+            this.typeText(this.dialog[this.line]['dialog'])
             this.line++
+        }else{
+            this.removeTime()
         }
         
     }
 
-    typeText(){
-
+    typeText(text){
+        console.log(text)
         this.dialogText.text = ''
         this.nextText.text = ''
 
         this.isTalking = true
+        let currentText = ''
+
+        let currentChar = 0
+        var timer = this.scene.time.addEvent({
+            delay: this.LETTER_TIMER,
+            callback: ()=> {
+                this.isTalking = true
+                this.playSound()
+                this.dialogText.text +=  text[currentChar]
+                //console.log(text[currentChar])
+                currentChar++
+                if (timer.getRepeatCount() == 0) {
+                    this.isTalking = false
+                    this.nextText.text = '[Click to continue]'
+                }
+            },
+            //args: [],
+            callbackScope: this,
+            repeat: text.length -1
+        });
+    }
+
+    playSound(){
+        let rand = Math.random()
+        if (rand < 1/3) {
+            this.Sound1.play()
+            
+        }else if (rand < 2/3) {
+            this.Sound2.play()
+        }else{
+            this.Sound3.play()
+        }
     }
 
     
     setDialog(dialog){
         this.dialog = this.cache.json.get(dialog)
+    }
+
+    removeTime(){
+        console.log("remove time")
+        this.box.destroy()
+        this.pfp.destroy()
+        this.dialogText.destroy()
+        this.nextText.destroy()
+        this.Sound1.destroy()
+        this.Sound2.destroy()
+        this.Sound3.destroy()
+        this.exists = false
+        this.destroy()
+
     }
 
     update(){
