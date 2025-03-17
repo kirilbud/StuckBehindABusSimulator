@@ -135,6 +135,8 @@ class Play extends Phaser.Scene {
             this.busSound.play();
         }
 
+        this.crashSound = this.sound.add('crash')
+
         this.introSequence = 0
         this.peterDiolog = new DialogObj(this, 20, 20 , "sans", ["PeterLaph1","PeterLaph2","PeterLaph3"], "peter", "intro1")
         
@@ -145,25 +147,48 @@ class Play extends Phaser.Scene {
             callback: ()=> {
                 this.drifttimer.delay =  40000*Math.random()
                 this.drift = -1000 + Math.random()*2000
-                console.log("yeah")
+
             },
-            //args: [],
             callbackScope: this,
             loop: true
         });
+
+
+
+        this.randomEvents = ['ran1','ran2','ran3','ran4','ran5','ran6','ran7','ran8','ran9','ran10','ran11','ran12','ran13','ran14','ran15',]
+
+        this.event = this.time.addEvent({
+            delay:  400*Math.random(),
+            callback: ()=> {
+                if (!this.peterDiolog.exists && this.introSequence >1 && this.randomEvents.length > 0 && !this.gameOver) {
+                    let i = Math.floor(Math.random() * this.randomEvents.length)
+                    let playEvent = this.randomEvents.splice(i, 1)[0]
+                    this.peterDiolog = new DialogObj(this, 20, 20 , "sans", ["PeterLaph1","PeterLaph2","PeterLaph3"], "peter", playEvent)
+                }
+                this.event.delay =  40000*Math.random()
+            },
+            callbackScope: this,
+            loop: true
+        });
+
+
+
     }
 
     update(){
         //intro sequence
-        if(!this.peterDiolog.exists && this.introSequence == 0){
+        if(!this.peterDiolog.exists && this.introSequence == 0 && !this.gameOver){
             this.peterDiolog = new DialogObj(this, 20, 20 , "sans", ["HummerTalk1","HummerTalk2","HummerTalk3"], "hummer", "intro2")
             this.introSequence++
-        }else if (!this.peterDiolog.exists && this.introSequence == 1) {
+        }else if (!this.peterDiolog.exists && this.introSequence == 1 && !this.gameOver) {
             this.peterDiolog = new DialogObj(this, 20, 20 , "sans", ["PeterLaph1","PeterLaph2","PeterLaph3"], "peter", "intro3")
             this.introSequence++
         }
 
-        if (this.clickingOnWheel) {
+        
+
+
+        if (this.clickingOnWheel && !this.gameOver) {
             let v1_x = this.wheel.x - this.initX
             let v1_y = this.wheel.y - this.initY
 
@@ -275,26 +300,28 @@ class Play extends Phaser.Scene {
         }
 
 
-        if (this.bus.zValu < 13 ) { // hit the bus
+        if (this.bus.zValu < 13 && !this.gameOver) { // hit the bus
             //this.sound.play('hit')
+            //this.crashSound.play()
             this.endGame()
         }
 
-        if (this.bus.zValu > 350) { // hit by hummer guy
+        if (this.bus.zValu > 350 && !this.gameOver) { // hit by hummer guy
             this.endGame()
         }
 
         //whent off the side of the road
-        if (this.globalXOffset < -13000) {
+        if (this.globalXOffset < -13000 && !this.gameOver) {
             this.endGame()
         }
-        if (this.globalXOffset > 15000) {
+        if (this.globalXOffset > 15000 && !this.gameOver) {
             this.endGame()
         }
     }
 
     endGame(){
-        console.log('crash')
+        
+        this.crashSound.play()
         this.busSound.stop()
         this.driving.stop()
 
@@ -305,6 +332,11 @@ class Play extends Phaser.Scene {
         this.add.text(game.config.width/2, game.config.height/4, 'oh no!', this.scoreConfig).setOrigin(0.5).setDepth(1000)
         this.add.text(game.config.width/2, game.config.height/4*2, 'Well at least you made it ' + (String(Math.floor(this.p1Score/6))+ "m"), this.scoreConfig).setOrigin(0.5).setDepth(1000)
         this.add.text(game.config.width/2, game.config.height/4*3, 'R to Restart or ← for menu', this.scoreConfig).setOrigin(0.5).setDepth(1000)
+
+        this.peterDiolog.hide()
+        this.peterDiolog.disabled = true
+        
+        
     }
 
 

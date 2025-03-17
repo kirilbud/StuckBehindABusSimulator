@@ -6,7 +6,7 @@ class DialogObj extends Phaser.GameObjects.Sprite{
         scene.add.existing(this)
         this.alpha = 0
         this.isTalking = false
-        this.finished = false
+        this.disabled = false
 
         this.sfx = sfx
         this.character = character
@@ -57,6 +57,8 @@ class DialogObj extends Phaser.GameObjects.Sprite{
 
         this.exists = true
 
+        
+
     }
 
     nextPart(){
@@ -81,17 +83,22 @@ class DialogObj extends Phaser.GameObjects.Sprite{
         let currentText = ''
 
         let currentChar = 0
-        var timer = this.scene.time.addEvent({
+        this.timer = this.scene.time.addEvent({
             delay: this.LETTER_TIMER,
             callback: ()=> {
+                if (this.disabled) {
+                    return
+                }
+                this.pfp.play(this.character + "Talking",true)
                 this.isTalking = true
                 this.playSound()
                 this.dialogText.text +=  text[currentChar]
                 //console.log(text[currentChar])
                 currentChar++
-                if (timer.getRepeatCount() == 0) {
+                if (this.timer.getRepeatCount() == 0) {
                     this.isTalking = false
                     this.nextText.text = '[Click to continue]'
+                    this.pfp.play(this.character,true)
                 }
             },
             //args: [],
@@ -127,7 +134,23 @@ class DialogObj extends Phaser.GameObjects.Sprite{
         this.Sound2.destroy()
         this.Sound3.destroy()
         this.exists = false
+        //this.timer
         this.destroy()
+
+    }
+
+    hide(){
+        
+        this.box.alpha = 0
+        this.pfp.alpha = 0
+        this.dialogText.alpha = 0
+        this.nextText.alpha = 0
+        this.Sound1.stop()
+        this.Sound2.stop()
+        this.Sound3.stop()
+        this.exists = false
+        //this.timer
+
 
     }
 
