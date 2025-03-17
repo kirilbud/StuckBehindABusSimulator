@@ -41,7 +41,11 @@ class Menu extends Phaser.Scene {
         //this.load.audio('music', './Assets/RollinDownhill.wav') 
 
         //dialog
-        this.load.json('intro1', 'json/intro1.json')
+        this.load.json('intro1', './Assets/dialoge/intro1.json')
+
+        //diologe sprites 
+        this.load.image('peter', './Assets/peterBox1.png')
+        
 
         //font
         this.load.bitmapFont('dis_font', './Assets/font/OpenDyslexic.png', './Assets/font/OpenDyslexic.xml')

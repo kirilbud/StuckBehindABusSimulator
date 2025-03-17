@@ -116,7 +116,7 @@ class Play extends Phaser.Scene {
             this.busSound.play();
         }
 
-        this.peterDiolog = new DialogObj(this, 20, 20 , "sans", ["PeterLaph1","PeterLaph2","PeterLaph3"], "peter")
+        this.peterDiolog = new DialogObj(this, 20, 20 , "sans", ["PeterLaph1","PeterLaph2","PeterLaph3"], "peter", "intro1")
     }
 
     update(){
