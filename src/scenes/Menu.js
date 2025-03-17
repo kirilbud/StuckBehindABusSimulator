@@ -8,6 +8,7 @@ class Menu extends Phaser.Scene {
         this.load.image('play', './Assets/play.png')
         this.load.image('credits', './Assets/credits.png')
         this.load.image('how', './Assets/howTo.png')
+        this.load.image('logo', './Assets/logo.png')
 
 
         //all the loading stuff goes here
@@ -22,6 +23,8 @@ class Menu extends Phaser.Scene {
 
         //player
         this.load.image('car', './Assets/car.png')
+        this.load.image('wheel', './Assets/wheel.png')
+
 
         //audio
         this.load.audio('driving', './Assets/sounds/driving.wav') 

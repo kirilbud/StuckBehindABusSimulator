@@ -18,6 +18,24 @@ class Play extends Phaser.Scene {
         //game assets
         this.add.sprite(0, 0, 'car').setDepth(501).setOrigin(0)
 
+        this.clickingOnWheel = false
+        this.initX = 0
+        this.initY = 0
+
+        this.wheel = this.add.sprite(350, 440, 'wheel').setDepth(501).setOrigin(.5).setInteractive({useHandCursor: true,}).setScale(1)
+        this.wheel.on('pointerdown', (pointer) =>{
+            this.clickingOnWheel = true
+            this.initX = pointer.downX
+            this.initY = pointer.downY
+            //console.log(pointer)
+        })
+
+        this.input.on('pointerup', ()=>{
+            this.clickingOnWheel = false
+            this.wheel.rotation = 0
+        })
+        
+
         this.bus = new Bus(this,game.config.width/2,game.config.height/2,'bus',0)
         this.bus.zValu = 100
 
@@ -104,7 +122,7 @@ class Play extends Phaser.Scene {
         }
         */
 
-        this.driving = this.sound.add('driving', {volume: .7 })
+        this.driving = this.sound.add('driving', {volume: 1 })
         this.driving.loop = true;
         if (!this.driving.isPlaying) {
             this.driving.play();
@@ -121,6 +139,28 @@ class Play extends Phaser.Scene {
 
     update(){
 
+        if (this.clickingOnWheel) {
+            let v1_x = this.wheel.x - this.initX
+            let v1_y = this.wheel.y - this.initY
+
+            let v1 = new Phaser.Math.Vector2(v1_x, v1_y)
+            v1.normalize()
+            //console.log(this.wheel.y - this.initY)
+
+            let v2_x = this.wheel.x - this.game.input.mousePointer.x
+            let v2_y = this.wheel.y - this.game.input.mousePointer.y
+
+            let v2 = new Phaser.Math.Vector2(v2_x, v2_y)
+            v2.normalize()
+            //console.log(this.wheel.y - this.game.input.mousePointer.y)
+
+            let dot = v2.dot(v1)
+            this.wheel.rotation = Math.atan2(v2.y , v2.x ) - Math.atan2(v1.y , v1.x )
+            let angle = v1
+            console.log(Math.atan2(v2.y , v2.x ) - Math.atan2(v1.y , v1.x ))
+        }
+        
+
         this.deltaTime =  (game.getTime() - this.startTime) /1000
         this.startTime = game.getTime()
 
@@ -135,6 +175,7 @@ class Play extends Phaser.Scene {
             //console.log(this.obstacals[0].zValu)
         }
 
+        /*
         if (keyLEFT.isDown) {
             this.globalXOffset += this.turnSpeed*this.deltaTime
             //console.log(this.obstacals[0].zValu)
@@ -143,6 +184,9 @@ class Play extends Phaser.Scene {
             this.globalXOffset -= this.turnSpeed*this.deltaTime
             //console.log(this.obstacals[0].zValu)
         }
+        */
+
+        this.globalXOffset = this.globalXOffset - this.wheel.rotation*this.deltaTime *4000
 
         if (keySTOP.isDown) {
             this.gameAcceleration = 10
@@ -192,10 +236,10 @@ class Play extends Phaser.Scene {
             this.bus.update()   
             //console.log(this.obstacals[0])
             this.driving.rate = this.gameSpeed/50
-            if (400/(this.bus.zValu* this.bus.zValu) > 1.5) {
-                this.busSound.volume = 1.5
+            if (500/(this.bus.zValu* this.bus.zValu) > 2) {
+                this.busSound.volume = 2
             }else{
-                this.busSound.volume = 400/(this.bus.zValu * this.bus.zValu)
+                this.busSound.volume = 500/(this.bus.zValu * this.bus.zValu)
             }
             
 
