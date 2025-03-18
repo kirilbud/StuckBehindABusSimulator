@@ -4,6 +4,21 @@ class Play extends Phaser.Scene {
     }
 
     create(){
+        
+        
+        let top = new Phaser.Geom.Line(game.config.width, 0, game.config.width, game.config.height/4); 
+        this.clouds = this.add.particles(0, 0,  'cloud',{
+            quantity: .000001,
+            lifespan: 200000,
+            delay: 0,
+            frequency: 5000, 
+            scale: {min: .2, max: 1},
+            speedX: {min: -10, max: -5},
+            emitZone: {
+                type: 'random',
+                source: top,
+            },
+        });
 
         let bounds_offset = 150
         this.physics.world.setBounds( bounds_offset , 0, game.config.width - bounds_offset*2, game.config.height)

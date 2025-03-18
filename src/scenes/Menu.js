@@ -20,6 +20,8 @@ class Menu extends Phaser.Scene {
         //obsticals
         this.load.image('tree', './Assets/trees.png')
         this.load.image('bus', './Assets/bus.png')
+        this.load.image('cloud', './Assets/cloud.png')
+
 
 
         //player
@@ -140,7 +142,7 @@ class Menu extends Phaser.Scene {
             }),
         })
 
-        
+
         this.add.rectangle(0,0,game.config.width, game.config.height, 0xDC5300).setOrigin(0)
 
         this.logo = this.add.sprite(400, 60, 'logo').setOrigin(0).setScale(.70)
