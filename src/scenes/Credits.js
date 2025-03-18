@@ -15,7 +15,7 @@ class Credits extends Phaser.Scene {
 
         let menuConfig = {
             fontFamily: 'Courier',
-            fontSize: '28px',
+            fontSize: '25px',
             backgroundColor: '#e6d526',
             color: '#000000',
             alighn: 'right',
@@ -28,13 +28,14 @@ class Credits extends Phaser.Scene {
 
         //menu text
         menuConfig.color = '#000000'
-        this.add.text(game.config.width/2, game.config.height/8, 'CREDITS:', menuConfig).setOrigin(0.5)
-        this.add.text(game.config.width/2, game.config.height/8*2, 'Made by Kiril Saltz', menuConfig).setOrigin(0.5)
-        this.add.text(game.config.width/2, game.config.height/8*3, 'Art assets made in Krita', menuConfig).setOrigin(0.5)
-        this.add.text(game.config.width/2, game.config.height/8*5, 'Music comming soon', menuConfig).setOrigin(0.5)
-        this.add.text(game.config.width/2, game.config.height/8*6, 'Sfx made with Adobe Audition using creative commons', menuConfig).setOrigin(0.5)
-        //this.add.text(game.config.width/2, game.config.height/7*6 , 'Use ← → arrows to move & space to stop', menuConfig).setOrigin(0.5)
-        this.add.text(game.config.width/2, game.config.height/8*7, 'Press Space to go back to menu', menuConfig).setOrigin(0.5)
+
+
+        this.text1 = this.add.text(game.config.width/2, game.config.height/7, 'CREDITS:', menuConfig).setOrigin(0.5)
+        this.text1 = this.add.text(game.config.width/2, game.config.height*2/7, "Made by Kiril Saltz", menuConfig).setOrigin(0.5)
+        this.text1 = this.add.text(game.config.width/2, game.config.height*3/7, 'Art assets made in Krita', menuConfig).setOrigin(0.5)
+        this.text1 = this.add.text(game.config.width/2, game.config.height*4/7, 'profile Pictures, Logo and Bus traced from Family guy', menuConfig).setOrigin(0.5)
+        this.text1 = this.add.text(game.config.width/2, game.config.height*5/7, 'Sfx using creative commons and clips from Family Guy', menuConfig).setOrigin(0.5)
+        this.text1 = this.add.text(game.config.width/2, game.config.height*6/7, 'Press Space to go back to menu', menuConfig).setOrigin(0.5)
 
         //keys
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT)
