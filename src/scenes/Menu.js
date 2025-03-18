@@ -73,7 +73,7 @@ class Menu extends Phaser.Scene {
         //diologe sprites 
         this.load.image('peter', './Assets/peterBox1.png')
         //this.load.image('peterSheet', './Assets/petersheet.png')
-        this.load.image('hummer', './Assets/Hummer1.png')
+        this.load.image('hummer', './Assets/hummer1.png')
         //this.load.image('hummerSheet', './Assets/hummersheet.png')
 
 
