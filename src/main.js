@@ -2,12 +2,17 @@
 Name: Kiril Saltz
 Project title: Stuck Behind a Bus
 Hours: 30
-Sources:
-Music: 
-sfx: 
+Phaser's major components:
+1) particle effects - for clouds
+2) text objects- for Dialog
+3) he animation manager - for Dialog
+4) the tween manager - for tutorial
+5) timers - for Dialog
 Sprites: Made in Krita
-in game music* and art is made by me
-*music not done yet
+Sound effects: found in creative commons
+3D math heavily inspired by this
+https://math.stackexchange.com/questions/2337183/one-point-perspective-formula
+Note:
 */
 
 

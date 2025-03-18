@@ -51,8 +51,11 @@ class DialogObj extends Phaser.GameObjects.Sprite{
 
         console.log(sfx[0])
         this.Sound1 = scene.sound.add(sfx[0])
+        this.Sound1.volume = 0.5
         this.Sound2 = scene.sound.add(sfx[1])
+        this.Sound2.volume = 0.5
         this.Sound3 = scene.sound.add(sfx[2])
+        this.Sound3.volume = 0.5
         this.nextPart()
 
         this.exists = true
